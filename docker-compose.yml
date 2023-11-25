@@ -19,6 +19,7 @@ services:
   adminer:
     image: adminer
     container_name: adminer
+    restart: always
     environment:
       - TZ=America/Sao_Paulo
       - TIMEZONE=America/Sao_Paulo
