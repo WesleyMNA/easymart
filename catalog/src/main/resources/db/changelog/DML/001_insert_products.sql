@@ -1,4 +1,4 @@
-INSERT INTO public.product (price, title)
+INSERT INTO public."em_product" ("price", "title")
 VALUES
   (19.99, 'Wireless Bluetooth Earbuds'),
   (39.95, 'Smart Fitness Tracker'),

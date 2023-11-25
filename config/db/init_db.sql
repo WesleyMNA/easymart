@@ -1,1 +1,3 @@
+CREATE DATABASE em_auth;
+CREATE DATABASE em_cart;
 CREATE DATABASE em_catalog;
