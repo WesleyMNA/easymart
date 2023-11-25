@@ -1,3 +1,10 @@
+easymart:
+  auth:
+    jwt:
+      public-key: ${JWT_PUBLIC_KEY:classpath:certs/public.pem}
+      private-key: ${JWT_PRIVATE_KEY:classpath:certs/private.pem}
+      lifetime: ${JWT_LIFETIME:15}
+
 logging:
   pattern:
     dateformat: yyyy-MM-dd HH:mm:ss.SSS,${TIMEZONE:America/Sao_Paulo}
