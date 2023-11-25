@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - includeAll:
+      path: DDL
+      relativeToChangelogFile: true
+
+  - includeAll:
+      path: DML
+      relativeToChangelogFile: true
