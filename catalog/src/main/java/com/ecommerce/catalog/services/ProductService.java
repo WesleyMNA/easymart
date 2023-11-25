@@ -2,6 +2,7 @@ package com.ecommerce.catalog.services;
 
 import com.ecommerce.catalog.dtos.ProductRequest;
 import com.ecommerce.catalog.dtos.ProductResponse;
+import com.ecommerce.catalog.exceptions.NotFoundException;
 import com.ecommerce.catalog.models.Product;
 import com.ecommerce.catalog.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,5 +28,18 @@ public class ProductService {
         Product product = mapper.map(request, Product.class);
         repository.save(product);
         return  mapper.map(product, ProductResponse.class);
+    }
+
+    public void update(Long id, ProductRequest request) {
+        Product product = validateId(id);
+        product.setTitle(request.getTitle());
+        product.setPrice(request.getPrice());
+        repository.save(product);
+    }
+
+    private Product validateId(Long id) {
+        return repository
+                .findById(id)
+                .orElseThrow(NotFoundException::new);
     }
 }

@@ -36,4 +36,13 @@ public class ProductController {
                 .created(uri)
                 .body(response);
     }
+
+    @PutMapping("/{id}")
+    private ResponseEntity<Void> update(@PathVariable Long id,
+                                        @RequestBody @Valid ProductRequest request) {
+        service.update(id, request);
+        return ResponseEntity
+                .noContent()
+                .build();
+    }
 }
