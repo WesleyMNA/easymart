@@ -5,6 +5,11 @@ easymart:
       private-key: ${JWT_PRIVATE_KEY:classpath:certs/private.pem}
       lifetime: ${JWT_LIFETIME:10800}
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8081/eureka
+
 logging:
   pattern:
     dateformat: yyyy-MM-dd HH:mm:ss.SSS,${TIMEZONE:America/Sao_Paulo}
@@ -15,7 +20,7 @@ server:
   error:
     include-message: always
     include-binding-errors: always
-  port: 8080
+  port: 0
   servlet:
     context-path: /api/em-auth
   tomcat:

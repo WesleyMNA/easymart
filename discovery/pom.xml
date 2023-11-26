@@ -9,15 +9,16 @@
 		<relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
 	</parent>
 
-	<artifactId>utils</artifactId>
-	<version>0.0.1</version>
-	<name>utils</name>
+	<artifactId>discovery</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>discovery</name>
 	<description>Demo project for Spring Boot</description>
 
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-oauth2-authorization-server</artifactId>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
 		</dependency>
 	</dependencies>
+
 </project>
