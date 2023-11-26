@@ -1,4 +1,4 @@
-package com.ecommerce.catalog.config;
+package com.ecommerce.utils.config;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Bean;

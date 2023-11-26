@@ -15,7 +15,7 @@ server:
   error:
     include-message: always
     include-binding-errors: always
-  port: 8088
+  port: 8080
   servlet:
     context-path: /api/em-catalog
   tomcat:

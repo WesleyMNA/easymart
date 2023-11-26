@@ -2,7 +2,7 @@ package com.ecommerce.catalog.services;
 
 import com.ecommerce.catalog.dtos.ProductRequest;
 import com.ecommerce.catalog.dtos.ProductResponse;
-import com.ecommerce.catalog.exceptions.NotFoundException;
+import com.ecommerce.utils.exceptions.NotFoundException;
 import com.ecommerce.catalog.models.Product;
 import com.ecommerce.catalog.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
