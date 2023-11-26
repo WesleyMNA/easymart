@@ -1,0 +1,31 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8081/eureka
+
+logging:
+  pattern:
+    dateformat: yyyy-MM-dd HH:mm:ss.SSS,${TIMEZONE:America/Sao_Paulo}
+  level:
+    root: ${LOG_LEVEL:info}
+
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+  port: 8080
+
+spring:
+  application:
+    name: gateway
+    timezone: ${TIMEZONE:America/Sao_Paulo}
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+  output:
+    ansi:
+      enabled: ALWAYS
+
