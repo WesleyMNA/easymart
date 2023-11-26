@@ -1,4 +1,4 @@
-package com.ecommerce.auth.properties;
+package com.ecommerce.utils.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

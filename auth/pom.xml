@@ -16,6 +16,12 @@
 	<description>Demo project for Spring Boot</description>
 
 	<dependencies>
-	</dependencies>
+        <dependency>
+            <groupId>com.ecommerce</groupId>
+            <artifactId>utils</artifactId>
+            <version>0.0.1</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
 </project>

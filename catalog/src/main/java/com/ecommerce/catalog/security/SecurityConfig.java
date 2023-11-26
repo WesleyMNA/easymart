@@ -1,6 +1,5 @@
-package com.ecommerce.auth.security;
+package com.ecommerce.catalog.security;
 
-import com.ecommerce.utils.jwt.JwtConverter;
 import com.ecommerce.utils.properties.JwtProperty;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -29,7 +28,6 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private final JwtProperty jwtProperty;
-    private final JwtConverter converter;
 
     private final String[] ALLOWED_ENDPOINTS = {
             "/",
@@ -54,7 +52,7 @@ public class SecurityConfig {
                             authorizeConfig.anyRequest().authenticated();
                         }
                 )
-                .oauth2ResourceServer((oauth2) -> oauth2.jwt(jwtConfigurer -> jwtConfigurer.jwtAuthenticationConverter(converter)))
+                .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
                 .build();
     }
 

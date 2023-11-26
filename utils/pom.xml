@@ -9,18 +9,10 @@
 		<relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
 	</parent>
 
-	<artifactId>catalog</artifactId>
-	<version>0.0.1</version>
-	<name>catalog</name>
-	<description>Demo project for Spring Boot</description>
 
-	<dependencies>
-		<dependency>
-			<groupId>com.ecommerce</groupId>
-			<artifactId>utils</artifactId>
-			<version>0.0.1</version>
-			<scope>compile</scope>
-		</dependency>
-	</dependencies>
+	<artifactId>utils</artifactId>
+	<version>0.0.1</version>
+	<name>utils</name>
+	<description>Demo project for Spring Boot</description>
 
 </project>

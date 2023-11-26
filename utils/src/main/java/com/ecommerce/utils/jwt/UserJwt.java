@@ -1,4 +1,4 @@
-package com.ecommerce.auth.dtos;
+package com.ecommerce.utils.jwt;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

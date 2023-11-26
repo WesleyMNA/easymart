@@ -2,7 +2,7 @@ package com.ecommerce.auth.services;
 
 import com.ecommerce.auth.dtos.LoginRequest;
 import com.ecommerce.auth.dtos.LoginResponse;
-import com.ecommerce.auth.exceptions.UnauthorizedException;
+import com.ecommerce.utils.exceptions.UnauthorizedException;
 import com.ecommerce.auth.models.User;
 import com.ecommerce.auth.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;

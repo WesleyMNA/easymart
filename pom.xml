@@ -20,6 +20,7 @@
 		<module>auth</module>
 		<module>cart</module>
 		<module>catalog</module>
+		<module>utils</module>
 	</modules>
 
 	<properties>

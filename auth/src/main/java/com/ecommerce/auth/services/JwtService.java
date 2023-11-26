@@ -2,9 +2,9 @@ package com.ecommerce.auth.services;
 
 
 import com.ecommerce.auth.dtos.LoginResponse;
-import com.ecommerce.auth.dtos.UserJwt;
+import com.ecommerce.utils.jwt.UserJwt;
 import com.ecommerce.auth.models.User;
-import com.ecommerce.auth.properties.JwtProperty;
+import com.ecommerce.utils.properties.JwtProperty;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
