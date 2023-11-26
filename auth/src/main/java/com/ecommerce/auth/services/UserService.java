@@ -6,7 +6,7 @@ import com.ecommerce.auth.exceptions.BadRequestException;
 import com.ecommerce.auth.models.User;
 import com.ecommerce.auth.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,15 +17,17 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository repository;
-    private final ModelMapper mapper;
     private final PasswordEncoder encoder;
 
     public UserResponse register(UserRequest request) {
-        validateEmail(request.getEmail());
-        User user = mapper.map(request, User.class);
-        user.setPassword(encoder.encode(request.getPassword()));
+        validateEmail(request.email());
+        var user = new User();
+        BeanUtils.copyProperties(request, user);
+        user.setPassword(encoder.encode(request.password()));
         repository.save(user);
-        return mapper.map(user, UserResponse.class);
+        var response = new UserResponse();
+        BeanUtils.copyProperties(user, response);
+        return response;
     }
 
     private void validateEmail(String email) {

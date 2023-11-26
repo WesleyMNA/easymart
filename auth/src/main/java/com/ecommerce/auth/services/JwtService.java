@@ -6,7 +6,7 @@ import com.ecommerce.auth.dtos.UserJwt;
 import com.ecommerce.auth.models.User;
 import com.ecommerce.auth.properties.JwtProperty;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
@@ -22,12 +22,12 @@ public final class JwtService {
 
     private final JwtEncoder encoder;
     private final JwtProperty property;
-    private final ModelMapper mapper;
 
     public LoginResponse createToken(User user) {
         Instant now = Instant.now();
         Instant expiration = now.plus(property.lifetime(), ChronoUnit.MINUTES);
-        UserJwt userJwt = mapper.map(user, UserJwt.class);
+        var userJwt = new UserJwt();
+        BeanUtils.copyProperties(user, userJwt);
 
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("Task Manager API")
@@ -37,6 +37,6 @@ public final class JwtService {
                 .claim("context", userJwt)
                 .build();
         String jwt = encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
-        return new LoginResponse(jwt,"bearer" );
+        return new LoginResponse(jwt, "bearer");
     }
 }
