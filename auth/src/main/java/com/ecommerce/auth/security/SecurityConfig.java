@@ -7,10 +7,10 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -23,12 +23,13 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     private final JwtProperty jwtProperty;
+    private final JwtConverter converter;
 
     private final String[] ALLOWED_ENDPOINTS = {
             "/",
@@ -45,15 +46,15 @@ public class SecurityConfig {
             throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-//                .and()
-//                .authorizeHttpRequests(auth -> auth
-//                        .antMatchers(ALLOWED_ENDPOINTS).permitAll()
-//                        .antMatchers(SWAGGER_ENDPOINTS).permitAll()
-//                        .antMatchers(HttpMethod.POST, "/v1/users").permitAll()
-//                        .anyRequest().authenticated()
-//                )
-//                .oauth2ResourceServer(oauth2 -> oauth2.jwt().jwtAuthenticationConverter(converter))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .cors(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(
+                        authorizeConfig -> {
+                            authorizeConfig.requestMatchers(ALLOWED_ENDPOINTS).permitAll();
+                            authorizeConfig.requestMatchers(SWAGGER_ENDPOINTS).permitAll();
+                            authorizeConfig.anyRequest().authenticated();
+                        }
+                )
+                .oauth2ResourceServer((oauth2) -> oauth2.jwt(jwtConfigurer -> jwtConfigurer.jwtAuthenticationConverter(converter)))
                 .build();
     }
 
