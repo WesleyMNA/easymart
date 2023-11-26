@@ -32,8 +32,8 @@ public class SecurityConfig {
     private final JwtConverter converter;
 
     private final String[] ALLOWED_ENDPOINTS = {
-            "/",
-            "/v1/auth/**"
+            "/v1/login",
+            "/v1/register"
     };
     private final String[] SWAGGER_ENDPOINTS = {
             "/v3/api-docs/**",
