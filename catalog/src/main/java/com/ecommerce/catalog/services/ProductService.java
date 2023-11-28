@@ -27,7 +27,7 @@ public class ProductService {
     public ProductResponse create(ProductRequest request) {
         Product product = mapper.map(request, Product.class);
         repository.save(product);
-        return  mapper.map(product, ProductResponse.class);
+        return mapper.map(product, ProductResponse.class);
     }
 
     public void update(Long id, ProductRequest request) {

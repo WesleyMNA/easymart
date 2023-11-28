@@ -26,4 +26,14 @@ public class User {
     @ToString.Exclude
     @OneToMany(mappedBy = "user")
     private Set<Product> products;
+
+    public void setProducts(Product product) {
+        product.setUser(this);
+        this.products.add(product);
+    }
+
+    public User(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
 }
