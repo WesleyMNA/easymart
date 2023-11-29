@@ -1,7 +1,6 @@
 package com.ecommerce.utils.helpers;
 
 import com.ecommerce.utils.jwt.UserJwt;
-import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -14,8 +13,7 @@ public final class AuthHelper {
         return getAuthentication() != null;
     }
 
-    public UserJwt getCurrentUser()
-            throws JSONException {
+    public UserJwt getCurrentUser() {
         Jwt jwt = (Jwt) getAuthentication().getPrincipal();
         return new UserJwt(jwt);
     }

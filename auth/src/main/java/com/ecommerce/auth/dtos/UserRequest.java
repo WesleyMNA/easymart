@@ -3,7 +3,6 @@ package com.ecommerce.auth.dtos;
 import com.ecommerce.auth.validators.password.CheckPasswords;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
 
 
 @CheckPasswords(password = "password", confirmPassword = "confirmPassword")

@@ -11,7 +11,6 @@ import com.ecommerce.utils.helpers.AuthHelper;
 import com.ecommerce.utils.jwt.UserJwt;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -28,16 +27,15 @@ public class CartService {
     private final AuthHelper authHelper;
 
     public Page<ProductResponse> findAll(Pageable pageable) {
+        User user = getCurrentUser();
         return productRepository
-                .findAll(pageable)
+                .findByUser(user, pageable)
                 .map((element) -> mapper.map(element, ProductResponse.class));
     }
 
-    public ProductResponse addProductToCart(ProductRequest request)
-            throws JSONException {
+    public ProductResponse addProductToCart(ProductRequest request) {
         User user = getCurrentUser();
         Product product = findProduct(user, request);
-        user.setProducts(product);
         userRepository.save(user);
         return mapper.map(product, ProductResponse.class);
     }
@@ -47,8 +45,7 @@ public class CartService {
         productRepository.delete(product);
     }
 
-    private User getCurrentUser()
-            throws JSONException {
+    private User getCurrentUser() {
         UserJwt currentUser = authHelper.getCurrentUser();
         return userRepository
                 .findByEmail(currentUser.getEmail())
@@ -64,7 +61,7 @@ public class CartService {
             product.setQuantity(request.getQuantity());
         } else
             product = new Product(request.getCatalogId(), request.getTitle(),
-                    request.getPrice(), request.getQuantity());
+                    request.getPrice(), request.getQuantity(), user);
 
         productRepository.save(product);
         return product;

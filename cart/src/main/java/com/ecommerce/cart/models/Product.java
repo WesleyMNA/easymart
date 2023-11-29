@@ -32,10 +32,12 @@ public class Product {
     public Product(Long catalogId,
                    String title,
                    Float price,
-                   Integer quantity) {
+                   Integer quantity,
+                   User user) {
         this.catalogId = catalogId;
         this.title = title;
         this.price = price;
         this.quantity = quantity;
+        this.user = user;
     }
 }

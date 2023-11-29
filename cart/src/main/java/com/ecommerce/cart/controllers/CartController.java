@@ -27,8 +27,7 @@ public class CartController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductResponse> addProductToCart(@RequestBody @Valid ProductRequest request)
-            throws JSONException {
+    public ResponseEntity<ProductResponse> addProductToCart(@RequestBody @Valid ProductRequest request) {
         ProductResponse response = service.addProductToCart(request);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
