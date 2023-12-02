@@ -1,5 +1,6 @@
 package com.ecommerce.order.models;
 
+import com.ecommerce.order.enumerations.OrderStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,6 +24,9 @@ public class Order {
     private LocalDateTime dateHour;
     @Column(name = "total", nullable = false)
     private Integer total;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private OrderStatus status;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "order")
