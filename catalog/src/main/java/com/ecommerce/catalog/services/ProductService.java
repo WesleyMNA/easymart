@@ -2,6 +2,7 @@ package com.ecommerce.catalog.services;
 
 import com.ecommerce.catalog.dtos.ProductRequest;
 import com.ecommerce.catalog.dtos.ProductResponse;
+import com.ecommerce.utils.exceptions.BadRequestException;
 import com.ecommerce.utils.exceptions.NotFoundException;
 import com.ecommerce.catalog.models.Product;
 import com.ecommerce.catalog.repositories.ProductRepository;
@@ -31,6 +32,7 @@ public class ProductService {
     }
 
     public ProductResponse create(ProductRequest request) {
+        validateTitle(request.getTitle());
         Product product = mapper.map(request, Product.class);
         repository.save(product);
         template.convertAndSend(EXCHANGE_NAME, "", product);
@@ -55,5 +57,10 @@ public class ProductService {
                 .orElseThrow(NotFoundException::new);
     }
 
+    private void validateTitle(String title) {
+        Boolean exists = repository.existsByTitle(title);
 
+        if (exists)
+            throw new BadRequestException();
+    }
 }
