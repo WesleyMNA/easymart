@@ -2,10 +2,12 @@ package com.ecommerce.catalog.dtos;
 
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class ProductResponse {
 
-    private Long id;
+    private UUID id;
     private String title;
     private Float price;
 }

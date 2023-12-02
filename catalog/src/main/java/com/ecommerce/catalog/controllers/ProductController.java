@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
@@ -38,7 +39,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    private ResponseEntity<Void> update(@PathVariable Long id,
+    private ResponseEntity<Void> update(@PathVariable UUID id,
                                         @RequestBody @Valid ProductRequest request) {
         service.update(id, request);
         return ResponseEntity
@@ -47,7 +48,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    private ResponseEntity<Void> delete(@PathVariable Long id) {
+    private ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity
                 .noContent()

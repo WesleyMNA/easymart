@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @RequiredArgsConstructor
 @Service
 public class ProductService {
@@ -30,21 +32,23 @@ public class ProductService {
         return mapper.map(product, ProductResponse.class);
     }
 
-    public void update(Long id, ProductRequest request) {
+    public void update(UUID id, ProductRequest request) {
         Product product = validateId(id);
         product.setTitle(request.getTitle());
         product.setPrice(request.getPrice());
         repository.save(product);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         Product product = validateId(id);
         repository.delete(product);
     }
 
-    private Product validateId(Long id) {
+    private Product validateId(UUID id) {
         return repository
                 .findById(id)
                 .orElseThrow(NotFoundException::new);
     }
+
+
 }
