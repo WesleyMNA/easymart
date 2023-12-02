@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -28,9 +27,6 @@ public class Order {
     @Column(name = "status", nullable = false)
     private OrderStatus status;
 
-    @ToString.Exclude
-    @OneToMany(mappedBy = "order")
-    private Set<Product> products;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

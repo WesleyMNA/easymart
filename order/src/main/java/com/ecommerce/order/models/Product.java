@@ -23,14 +23,8 @@ public class Product {
     private String title;
     @Column(name = "price", nullable = false)
     private Float price;
-    @Column(name = "quantity", nullable = false)
+    @Column(name = "quantity")
     private Integer quantity;
-    @Column(name = "total", nullable = false)
-    private Integer total;
-
-    @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false)
-    private Order order;
 
     public Product(ProductAmqp message) {
         this.id = message.id();
