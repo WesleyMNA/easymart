@@ -2,6 +2,7 @@ version: '3.8'
 
 volumes:
   db:
+  rabbitmq:
 
 services:
   db:
@@ -15,6 +16,17 @@ services:
       - ./config/db/init_db.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - '5432:5432'
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    restart: always
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq
+    ports:
+      - '5672:5672'
+      - '15672:15672'
 
   adminer:
     image: adminer

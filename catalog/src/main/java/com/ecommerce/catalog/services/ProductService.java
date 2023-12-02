@@ -7,17 +7,21 @@ import com.ecommerce.catalog.models.Product;
 import com.ecommerce.catalog.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+import static com.ecommerce.catalog.amqp.ProductsAmqpConfig.EXCHANGE_NAME;
+
 @RequiredArgsConstructor
 @Service
 public class ProductService {
 
     private final ProductRepository repository;
+    private final RabbitTemplate template;
     private final ModelMapper mapper;
 
     public Page<ProductResponse> findAll(Pageable pageable) {
@@ -29,6 +33,7 @@ public class ProductService {
     public ProductResponse create(ProductRequest request) {
         Product product = mapper.map(request, Product.class);
         repository.save(product);
+        template.convertAndSend(EXCHANGE_NAME, "", product);
         return mapper.map(product, ProductResponse.class);
     }
 

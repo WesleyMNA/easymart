@@ -3,22 +3,37 @@ package com.ecommerce.catalog.services;
 import com.ecommerce.catalog.models.Product;
 import com.ecommerce.catalog.repositories.ProductRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.amqp.core.MessageDeliveryMode;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static com.ecommerce.catalog.amqp.ProductsAmqpConfig.EXCHANGE_NAME;
+
+@Log4j2
 @AllArgsConstructor
 @Component
 public class ProductsInserter {
 
     private final ProductRepository repository;
+    private final RabbitTemplate template;
 
     @EventListener
     public void addProducts(ContextRefreshedEvent event) {
         List<Product> products = getProducts();
-        repository.saveAll(products);
+        products.forEach(product -> {
+            Boolean exists = repository.existsByTitle(product.getTitle());
+
+            if (!exists) {
+                repository.save(product);
+                template.convertAndSend(EXCHANGE_NAME, "", product);
+                log.info("%s added".formatted(product));
+            }
+        });
     }
 
     public List<Product> getProducts() {
