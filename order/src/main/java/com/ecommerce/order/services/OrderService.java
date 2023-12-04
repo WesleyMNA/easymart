@@ -6,7 +6,6 @@ import com.ecommerce.order.enumerations.OrderStatus;
 import com.ecommerce.order.models.Order;
 import com.ecommerce.order.models.OrderProduct;
 import com.ecommerce.order.models.Product;
-import com.ecommerce.order.repositories.OrderProductRepository;
 import com.ecommerce.order.repositories.OrderRepository;
 import com.ecommerce.order.repositories.ProductRepository;
 import com.ecommerce.utils.exceptions.BadRequestException;
@@ -30,7 +29,6 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
-    private final OrderProductRepository orderProductRepository;
     private final ModelMapper mapper;
     private final AuthHelper authHelper;
 
