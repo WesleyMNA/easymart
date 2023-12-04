@@ -16,6 +16,8 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
     @Column(name = "catalog_id", nullable = false)
     private Long catalogId;
     @Column(name = "title", nullable = false, unique = true)
@@ -25,19 +27,15 @@ public class Product {
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-    public Product(Long catalogId,
+    public Product(Long userId,
+                   Long catalogId,
                    String title,
                    Float price,
-                   Integer quantity,
-                   User user) {
+                   Integer quantity) {
+        this.userId = userId;
         this.catalogId = catalogId;
         this.title = title;
         this.price = price;
         this.quantity = quantity;
-        this.user = user;
     }
 }

@@ -3,7 +3,7 @@ easymart:
     jwt:
       public-key: ${JWT_PUBLIC_KEY:classpath:certs/public.pem}
       private-key: ${JWT_PRIVATE_KEY:classpath:certs/private.pem}
-      lifetime: ${JWT_LIFETIME:10800}
+      lifetime: ${JWT_LIFETIME:1000000}
 
 eureka:
   client:

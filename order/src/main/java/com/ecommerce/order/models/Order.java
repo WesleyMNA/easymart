@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -20,6 +19,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
     @Column(name = "dateHour", nullable = false)
     private LocalDateTime dateHour;
     @Column(name = "total", nullable = false)
@@ -28,7 +29,4 @@ public class Order {
     @Column(name = "status", nullable = false)
     private OrderStatus status;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
 }

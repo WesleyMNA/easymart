@@ -2,9 +2,7 @@ package com.ecommerce.order.services;
 
 import com.ecommerce.order.dtos.OrderRequest;
 import com.ecommerce.order.dtos.OrderResponse;
-import com.ecommerce.order.models.User;
 import com.ecommerce.order.repositories.OrderRepository;
-import com.ecommerce.order.repositories.UserRepository;
 import com.ecommerce.utils.helpers.AuthHelper;
 import com.ecommerce.utils.jwt.UserJwt;
 import lombok.RequiredArgsConstructor;
@@ -20,22 +18,14 @@ import java.util.List;
 public class OrderService {
 
     private final OrderRepository repository;
-    private final UserRepository userRepository;
     private final ModelMapper mapper;
     private final AuthHelper authHelper;
 
     public Page<OrderResponse> findAll(Pageable pageable) {
-        User user = getCurrentUser();
+        UserJwt user = authHelper.getCurrentUser();
         return repository
-                .findByUser(user, pageable)
+                .findByUserId(user.getId(), pageable)
                 .map((element) -> mapper.map(element, OrderResponse.class));
-    }
-
-    private User getCurrentUser() {
-        UserJwt currentUser = authHelper.getCurrentUser();
-        return userRepository
-                .findByEmail(currentUser.getEmail())
-                .orElseGet(() -> userRepository.save(new User(currentUser.getName(), currentUser.getEmail())));
     }
 
     public OrderResponse create(List<OrderRequest> request) {

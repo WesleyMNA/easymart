@@ -37,3 +37,21 @@ services:
       - TIMEZONE=America/Sao_Paulo
     ports:
       - '10000:8080'
+
+  discovery:
+    build:
+      context: ./discovery
+    container_name: discovery
+    restart: always
+    ports:
+      - '8081:8081'
+
+  gateway:
+    build:
+      context: ./gateway
+    container_name: gateway
+    restart: always
+    ports:
+      - '8080:8080'
+    depends_on:
+      - discovery
