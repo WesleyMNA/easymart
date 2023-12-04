@@ -58,14 +58,14 @@ public class OrderService {
             var totalPrice = orderRequest.getQuantity() * orderRequest.getPrice();
             total.updateAndGet(v -> v + totalPrice);
             var orderProduct = new OrderProduct(orderRequest.getQuantity(), orderRequest.getPrice(),
-                    order, product);
+                    order, product.getId());
             product.setQuantity(product.getQuantity() - orderProduct.getQuantity());
             productRepository.save(product);
             products.add(orderProduct);
         });
         order.setTotal(total.get());
+        order.setProducts(products);
         orderRepository.save(order);
-        orderProductRepository.saveAll(products);
         return mapper.map(order, OrderResponse.class);
     }
 }

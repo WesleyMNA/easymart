@@ -4,6 +4,7 @@ import com.ecommerce.order.enumerations.OrderStatus;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 public class OrderResponse {
@@ -13,4 +14,5 @@ public class OrderResponse {
     private LocalDateTime dateHour;
     private Float total;
     private OrderStatus status;
+    private Set<OrderProductResponse> products;
 }

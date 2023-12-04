@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -29,9 +32,16 @@ public class Order {
     @Column(name = "status", nullable = false)
     private OrderStatus status;
 
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private Set<OrderProduct> products = new HashSet<>();
+
     public Order(Long userId, LocalDateTime dateHour, OrderStatus status) {
         this.userId = userId;
         this.dateHour = dateHour;
         this.status = status;
+    }
+
+    public void setProducts(Collection<OrderProduct> products) {
+        this.products.addAll(products);
     }
 }
