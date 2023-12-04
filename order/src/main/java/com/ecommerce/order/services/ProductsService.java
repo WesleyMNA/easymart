@@ -19,7 +19,6 @@ public class ProductsService {
 
     @RabbitListener(queues = QUEUE_NAME)
     public void addProducts(ProductAmqp message) {
-        System.out.println(message);
         var product = new Product(message);
         repository.save(product);
         log.info("New product added: %s".formatted(message));

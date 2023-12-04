@@ -4,6 +4,7 @@ import com.ecommerce.order.dtos.ProductAmqp;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Random;
 import java.util.UUID;
 
 @Getter
@@ -19,16 +20,14 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false)
     private UUID id;
-    @Column(name = "title", nullable = false, unique = true)
-    private String title;
-    @Column(name = "price", nullable = false)
-    private Float price;
     @Column(name = "quantity")
     private Integer quantity;
 
     public Product(ProductAmqp message) {
         this.id = message.id();
-        this.title = message.title();
-        this.price = message.price();
+        Random random = new Random();
+        this.quantity = random.ints(1, 1000)
+                .findFirst()
+                .orElse(0);
     }
 }

@@ -24,9 +24,14 @@ public class Order {
     @Column(name = "dateHour", nullable = false)
     private LocalDateTime dateHour;
     @Column(name = "total", nullable = false)
-    private Integer total;
+    private Float total;
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private OrderStatus status;
 
+    public Order(Long userId, LocalDateTime dateHour, OrderStatus status) {
+        this.userId = userId;
+        this.dateHour = dateHour;
+        this.status = status;
+    }
 }

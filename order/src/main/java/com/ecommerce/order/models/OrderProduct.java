@@ -18,8 +18,8 @@ public class OrderProduct {
     private Long id;
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
-    @Column(name = "total", nullable = false)
-    private Integer total;
+    @Column(name = "price", nullable = false)
+    private Float price;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
@@ -27,4 +27,12 @@ public class OrderProduct {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
+
+
+    public OrderProduct(Integer quantity, Float price, Order order, Product product) {
+        this.quantity = quantity;
+        this.price = price;
+        this.order = order;
+        this.product = product;
+    }
 }
