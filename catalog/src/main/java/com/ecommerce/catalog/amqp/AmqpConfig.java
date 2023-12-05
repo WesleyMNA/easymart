@@ -1,7 +1,7 @@
 package com.ecommerce.catalog.amqp;
 
 import org.springframework.amqp.core.ExchangeBuilder;
-import org.springframework.amqp.core.FanoutExchange;
+import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -10,9 +10,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class ProductsAmqpConfig {
+public class AmqpConfig {
 
-    public final static String EXCHANGE_NAME = "new-products.ex";
+    public final static String EXCHANGE_NAME = "easymart.ex";
 
     @Bean
     public RabbitAdmin createRabbitAdmin(ConnectionFactory connectionFactory) {
@@ -25,9 +25,9 @@ public class ProductsAmqpConfig {
     }
 
     @Bean
-    public FanoutExchange topicExchange() {
+    public TopicExchange topicExchange() {
         return ExchangeBuilder
-                .fanoutExchange(EXCHANGE_NAME)
+                .topicExchange(EXCHANGE_NAME)
                 .build();
     }
 }

@@ -1,20 +1,18 @@
-package com.ecommerce.order.amqp;
+package com.ecommerce.payment.amqp;
 
-import org.springframework.amqp.core.*;
+import org.springframework.amqp.core.ExchangeBuilder;
+import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 
-@Profile("!test")
 @Configuration
-public class ProductsAmqpConfig {
+public class PaymentsAmqpConfig {
 
-    public final static String EXCHANGE_NAME = "new-products.ex";
-    public final static String QUEUE_NAME = "order-products";
+    public final static String EXCHANGE_NAME = "easymart.ex";
 
     @Bean
     public RabbitAdmin createRabbitAdmin(ConnectionFactory connectionFactory) {
@@ -27,23 +25,9 @@ public class ProductsAmqpConfig {
     }
 
     @Bean
-    public FanoutExchange fanoutExchange() {
+    public TopicExchange topicExchange() {
         return ExchangeBuilder
-                .fanoutExchange(EXCHANGE_NAME)
+                .topicExchange(EXCHANGE_NAME)
                 .build();
-    }
-
-    @Bean
-    public Queue createQueue() {
-        return QueueBuilder
-                .durable(QUEUE_NAME)
-                .build();
-    }
-
-    @Bean
-    public Binding binding() {
-        return BindingBuilder
-                .bind(createQueue())
-                .to(fanoutExchange());
     }
 }

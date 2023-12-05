@@ -4,7 +4,6 @@ import com.ecommerce.catalog.models.Product;
 import com.ecommerce.catalog.repositories.ProductRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.amqp.core.MessageDeliveryMode;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static com.ecommerce.catalog.amqp.ProductsAmqpConfig.EXCHANGE_NAME;
+import static com.ecommerce.catalog.amqp.AmqpConfig.EXCHANGE_NAME;
 
 @Log4j2
 @AllArgsConstructor
@@ -30,7 +29,7 @@ public class ProductsInserter {
 
             if (!exists) {
                 repository.save(product);
-                template.convertAndSend(EXCHANGE_NAME, "", product);
+                template.convertAndSend(EXCHANGE_NAME, "new-products.queue", product);
                 log.info("%s added".formatted(product));
             }
         });

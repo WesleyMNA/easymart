@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/v1/cart")
 public class CartController {
 
     private final CartService service;

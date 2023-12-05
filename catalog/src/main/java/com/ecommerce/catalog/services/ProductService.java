@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-import static com.ecommerce.catalog.amqp.ProductsAmqpConfig.EXCHANGE_NAME;
+import static com.ecommerce.catalog.amqp.AmqpConfig.EXCHANGE_NAME;
 
 @RequiredArgsConstructor
 @Service

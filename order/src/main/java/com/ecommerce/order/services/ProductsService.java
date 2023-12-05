@@ -8,7 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
-import static com.ecommerce.order.amqp.ProductsAmqpConfig.QUEUE_NAME;
+import static com.ecommerce.order.amqp.AmqpConfig.QUEUE_NAME;
 
 @Log4j2
 @RequiredArgsConstructor

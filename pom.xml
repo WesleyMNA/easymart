@@ -23,6 +23,7 @@
 		<module>discovery</module>
 		<module>gateway</module>
 		<module>order</module>
+		<module>payment</module>
 		<module>utils</module>
 	</modules>
 
