@@ -5,9 +5,14 @@ import com.ecommerce.payment.models.Payment;
 import com.ecommerce.payment.repositories.PaymentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Random;
 
 import static com.ecommerce.payment.amqp.PaymentsAmqpConfig.EXCHANGE_NAME;
@@ -19,10 +24,11 @@ public class PaymentProcessor {
     private final PaymentRepository repository;
     private final RabbitTemplate template;
 
+    private final Random random = new Random();
+
     @Async
     public void processPayment(Payment payment) {
         try {
-            Random random = new Random();
             int oneSecond = 1000;
             int tenSeconds = oneSecond * 10;
             int fiveMinutes = oneSecond * 300;
@@ -30,18 +36,33 @@ public class PaymentProcessor {
                     .findFirst()
                     .orElse(0);
             Thread.sleep(sleepTime);
-            int processStatus = random.ints(1, 100)
-                    .findFirst()
-                    .orElse(0);
-
-            if (processStatus <= 90)
-                payment.setStatus(PaymentStatus.SUCCESS);
-            else
-                payment.setStatus(PaymentStatus.DENIED);
-
+            changeStatus(payment);
+            payment.setProcessedAt(LocalDateTime.now());
             repository.save(payment);
             template.convertAndSend(EXCHANGE_NAME, "process-payment", payment);
         } catch (InterruptedException ignored) {
         }
+    }
+
+    private void changeStatus(Payment payment) {
+        int processStatus = random.ints(1, 100)
+                .findFirst()
+                .orElse(0);
+
+        if (processStatus <= 90)
+            payment.setStatus(PaymentStatus.SUCCESS);
+        else
+            payment.setStatus(PaymentStatus.DENIED);
+    }
+
+    @EventListener
+    public void processWaiting(ContextRefreshedEvent event) {
+        List<Payment> payments = repository.findByStatus(PaymentStatus.WAITING);
+        payments.forEach(payment -> {
+            changeStatus(payment);
+            payment.setProcessedAt(LocalDateTime.now());
+            repository.save(payment);
+            template.convertAndSend(EXCHANGE_NAME, "process-payment", payment);
+        });
     }
 }
