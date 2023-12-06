@@ -3,6 +3,8 @@ package com.ecommerce.cart.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @ToString
@@ -19,7 +21,7 @@ public class Product {
     @Column(name = "user_id", nullable = false)
     private Long userId;
     @Column(name = "catalog_id", nullable = false)
-    private Long catalogId;
+    private UUID catalogId;
     @Column(name = "title", nullable = false, unique = true)
     private String title;
     @Column(name = "price", nullable = false)
@@ -28,7 +30,7 @@ public class Product {
     private Integer quantity;
 
     public Product(Long userId,
-                   Long catalogId,
+                   UUID catalogId,
                    String title,
                    Float price,
                    Integer quantity) {
