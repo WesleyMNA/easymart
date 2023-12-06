@@ -45,7 +45,7 @@ public class PaymentService {
         Boolean exists = cardRepository.existsByNumber(data.number());
 
         if (exists)
-            throw new BadRequestException();
+            return;
 
         var card = new Card(data.number(), data.ownerName(), data.secret());
         cardRepository.save(card);

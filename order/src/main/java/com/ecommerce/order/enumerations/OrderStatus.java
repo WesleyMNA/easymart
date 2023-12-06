@@ -6,5 +6,6 @@ public enum OrderStatus {
     PREPARING_TO_SEND,
     SENT,
     COMPLETED,
+    DENIED,
     CANCELED
 }

@@ -14,7 +14,8 @@ import org.springframework.context.annotation.Profile;
 public class AmqpConfig {
 
     public final static String EXCHANGE_NAME = "easymart.ex";
-    public final static String QUEUE_NAME = "new-products.queue";
+    public final static String NEW_PRODUCTS_QUEUE_NAME = "new-products.queue";
+    public final static String PAYMENTS_QUEUE_NAME = "payments";
 
     @Bean
     public RabbitAdmin createRabbitAdmin(ConnectionFactory connectionFactory) {
@@ -36,7 +37,7 @@ public class AmqpConfig {
     @Bean
     public Queue createQueue() {
         return QueueBuilder
-                .durable(QUEUE_NAME)
+                .durable(NEW_PRODUCTS_QUEUE_NAME)
                 .build();
     }
 
@@ -51,7 +52,7 @@ public class AmqpConfig {
     @Bean
     public Declarables declarePayments() {
         Queue queue = QueueBuilder
-                .durable("payments")
+                .durable(PAYMENTS_QUEUE_NAME)
                 .build();
         Binding binding = BindingBuilder
                 .bind(queue)
