@@ -27,4 +27,18 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private PaymentStatus status;
+    @Column(name = "order_id", nullable = false)
+    private Long orderId;
+    @Column(name = "total", nullable = false)
+    private Float total;
+
+    public Payment(LocalDateTime createdAt,
+                   PaymentStatus status,
+                   Long orderId,
+                   Float total) {
+        this.createdAt = createdAt;
+        this.status = status;
+        this.orderId = orderId;
+        this.total = total;
+    }
 }
