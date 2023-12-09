@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 import static com.ecommerce.catalog.amqp.AmqpConfig.EXCHANGE_NAME;
+import static com.ecommerce.catalog.amqp.AmqpConfig.NEW_PRODUCT_ROUTING_KEY;
 
 @Log4j2
 @AllArgsConstructor
@@ -29,7 +30,7 @@ public class ProductsInserter {
 
             if (!exists) {
                 repository.save(product);
-                template.convertAndSend(EXCHANGE_NAME, "new-products.queue", product);
+                template.convertAndSend(EXCHANGE_NAME, NEW_PRODUCT_ROUTING_KEY, product);
                 log.info("%s added".formatted(product));
             }
         });

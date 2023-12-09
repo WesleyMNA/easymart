@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 import static com.ecommerce.catalog.amqp.AmqpConfig.EXCHANGE_NAME;
+import static com.ecommerce.catalog.amqp.AmqpConfig.NEW_PRODUCT_ROUTING_KEY;
 
 @RequiredArgsConstructor
 @Service
@@ -35,7 +36,7 @@ public class ProductService {
         validateTitle(request.getTitle());
         Product product = mapper.map(request, Product.class);
         repository.save(product);
-        template.convertAndSend(EXCHANGE_NAME, "", product);
+        template.convertAndSend(EXCHANGE_NAME, NEW_PRODUCT_ROUTING_KEY, product);
         return mapper.map(product, ProductResponse.class);
     }
 

@@ -21,6 +21,6 @@ public class ProductsService {
     public void addProducts(ProductAmqp message) {
         var product = new Product(message);
         repository.save(product);
-        log.info("New product added: %s".formatted(message));
+        log.info("New product added: %s".formatted(product));
     }
 }

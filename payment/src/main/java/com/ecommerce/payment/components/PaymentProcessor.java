@@ -4,6 +4,7 @@ import com.ecommerce.payment.dtos.PaymentStatus;
 import com.ecommerce.payment.models.Payment;
 import com.ecommerce.payment.repositories.PaymentRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -17,6 +18,7 @@ import java.util.Random;
 
 import static com.ecommerce.payment.amqp.PaymentsAmqpConfig.EXCHANGE_NAME;
 
+@Log4j2
 @RequiredArgsConstructor
 @Component
 public class PaymentProcessor {
@@ -39,6 +41,7 @@ public class PaymentProcessor {
             changeStatus(payment);
             payment.setProcessedAt(LocalDateTime.now());
             repository.save(payment);
+            log.info("Payment processed: %s".formatted(payment));
             template.convertAndSend(EXCHANGE_NAME, "process-payment", payment);
         } catch (InterruptedException ignored) {
         }
@@ -62,6 +65,7 @@ public class PaymentProcessor {
             changeStatus(payment);
             payment.setProcessedAt(LocalDateTime.now());
             repository.save(payment);
+            log.info("Payment processed: %s".formatted(payment));
             template.convertAndSend(EXCHANGE_NAME, "process-payment", payment);
         });
     }

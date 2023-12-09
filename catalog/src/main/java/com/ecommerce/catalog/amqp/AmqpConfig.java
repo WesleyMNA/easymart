@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 public class AmqpConfig {
 
     public final static String EXCHANGE_NAME = "easymart.ex";
+    public final static String NEW_PRODUCT_ROUTING_KEY = "new-products";
 
     @Bean
     public RabbitAdmin createRabbitAdmin(ConnectionFactory connectionFactory) {

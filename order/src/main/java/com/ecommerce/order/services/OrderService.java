@@ -45,6 +45,7 @@ public class OrderService {
         var products = new ArrayList<OrderProduct>();
         AtomicReference<Float> total = new AtomicReference<>(0f);
         request.forEach(orderRequest -> {
+            System.out.println(orderRequest.getProductId());
             Product product = productRepository
                     .findById(orderRequest.getProductId())
                     .orElseThrow(NotFoundException::new);
